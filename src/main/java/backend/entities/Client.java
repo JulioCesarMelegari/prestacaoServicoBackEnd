@@ -29,11 +29,11 @@ public class Client {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotEmpty(message = "{campo.nome.obrigatorio}")
+	//@NotEmpty(message = "{campo.nome.obrigatorio}")
 	@Column(nullable = false, length = 150)
 	private String name;
 	
-	@NotNull(message = "{campo.cpf.obrigatorio}") 
+	//@NotNull(message = "{campo.cpf.obrigatorio}") 
 	@CPF(message = "{campo.cpf.invalido}") 
 	@Column(nullable = false, length = 11)
 	private String cpf;
