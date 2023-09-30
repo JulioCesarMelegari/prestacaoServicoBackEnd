@@ -1,15 +1,13 @@
 package backend.controllers;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.swing.event.ListSelectionEvent;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +58,7 @@ public class ClientController {
 	
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Integer id) {
-		if(repository.findById(id).isPresent()) {
+		if(repository.findById(id)!=null) {
 			repository.deleteById(id);
 			ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}	
