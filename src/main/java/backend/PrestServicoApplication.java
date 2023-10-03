@@ -8,9 +8,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class })
 @SpringBootApplication
 public class PrestServicoApplication {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(PrestServicoApplication.class, args);
 	}
-
 }

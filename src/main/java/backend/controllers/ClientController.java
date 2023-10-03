@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,40 +21,44 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import backend.dtos.ClientDto;
+import backend.dtos.ClientResponseDto;
 import backend.entities.Client;
 import backend.repository.ClientRepository;
 import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/clientes")
+@CrossOrigin("http://localhost:4200")
 public class ClientController {
 	
 	@Autowired
 	private ClientRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<ClientDto>> findAll(){
+	public ResponseEntity<List<ClientResponseDto>> findAll(){
 		List<Client> list = repository.findAll();
-		List<ClientDto> listDto = list
+		List<ClientResponseDto> listDto = list
 									.stream()
-									.map(client -> new ClientDto(client.getName(),client.getCpf()))
+									.map(client -> new ClientResponseDto(client.getId(),client.getName(),client.getCpf(), client.getDateRegister()))
 									.collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(listDto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClientDto> save(@RequestBody @Valid ClientDto client) {
-		repository.save(new Client(client.name(), client.cpf()));
+	public ResponseEntity<Client> save(@Valid @RequestBody ClientDto clientDto) {
+		Client client = new Client();
+		client.setName(clientDto.name());
+		client.setCpf(clientDto.cpf());
+		repository.save(client);
 	
 		return ResponseEntity.status(HttpStatus.CREATED).body(client);
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<ClientDto> getClient(@PathVariable Integer id){
+	public ResponseEntity<Client> getClient(@PathVariable Integer id){
 		Client client = repository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Cliente não encontrado"));
-		ClientDto clientDto = new ClientDto(client.getName(), client.getCpf());
-		return ResponseEntity.status(HttpStatus.OK).body(clientDto);
+		return ResponseEntity.status(HttpStatus.OK).body(client);
 	}
 	
 	@DeleteMapping("{id}")
