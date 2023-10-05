@@ -1,6 +1,9 @@
 package backend.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Service{
+public class ServiceProvided{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +31,8 @@ public class Service{
 	
 	@Column
 	private BigDecimal value;
+	
+	@Column(name = "data_cadastro")
+	private LocalDate date;
 
 }

@@ -38,9 +38,6 @@ public class Client {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dateRegister;
 	
-	@OneToMany(mappedBy = "client")
-	private List<Service> service = new ArrayList<>();
-	
 	public Client() {}
 		
 	public Client(String name, String cpf) {
