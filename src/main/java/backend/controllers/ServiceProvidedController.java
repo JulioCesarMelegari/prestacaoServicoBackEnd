@@ -2,12 +2,14 @@ package backend.controllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,9 +22,10 @@ import backend.repository.ServiceProvidedRepository;
 import backend.util.BigDecimalConverter;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+
 @RequestMapping("/servicos")
 @RequiredArgsConstructor
+@RestController
 public class ServiceProvidedController {
 	
 	private final ClientRepository clientRepository;
@@ -45,6 +48,11 @@ public class ServiceProvidedController {
 		serviceProvided.setClient(client);
 		serviceProvided.setValue(bigDecimalConverter.converter(dto.value()));
 		return serviceRepository.save(serviceProvided);	
+	}
+	
+	@GetMapping
+	public List<ServiceProvided> serviceByMonth (@RequestParam(value = "month", required = false) Integer month){
+		return serviceRepository.findByMonth(month);
 	}
 
 }

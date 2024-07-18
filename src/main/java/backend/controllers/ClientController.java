@@ -9,7 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -29,7 +29,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/clientes")
-@CrossOrigin("http://localhost:4200")
 public class ClientController {
 	
 	@Autowired
@@ -59,6 +58,11 @@ public class ClientController {
 	public ResponseEntity<Client> getClient(@PathVariable Integer id){
 		Client client = repository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Cliente não encontrado"));
 		return ResponseEntity.status(HttpStatus.OK).body(client);
+	}
+	
+	public List<Client> getLikeName(@RequestParam(value = "name", required = true) String name){
+		return repository.findByName('%' + name + '%');
+
 	}
 	
 	@DeleteMapping("{id}")

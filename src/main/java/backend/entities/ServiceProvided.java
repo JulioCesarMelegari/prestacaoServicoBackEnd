@@ -3,7 +3,7 @@ package backend.entities;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,19 +20,21 @@ public class ServiceProvided{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "servico_id")
 	private Integer id;
 	
-	@Column(nullable = false, length = 150)
+	@Column(nullable = false, length = 150, name = "servico_descricao")
 	private String description;
 	
 	@ManyToOne
-	@JoinColumn(name = "client_id")
+	@JoinColumn(name = "cliente_id")
 	private Client client;
 	
-	@Column
+	@Column(name = "valor_servico")
 	private BigDecimal value;
 	
 	@Column(name = "data_cadastro")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate date;
 
 }
