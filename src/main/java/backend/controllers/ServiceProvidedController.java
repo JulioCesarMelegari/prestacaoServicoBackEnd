@@ -20,6 +20,7 @@ import backend.entities.ServiceProvided;
 import backend.repository.ClientRepository;
 import backend.repository.ServiceProvidedRepository;
 import backend.util.BigDecimalConverter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 
@@ -34,7 +35,7 @@ public class ServiceProvidedController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ServiceProvided salvar(@RequestBody ServiceProvidedDto dto ) {
+	public ServiceProvided salvar(@RequestBody @Valid ServiceProvidedDto dto ) {
 		
 		Integer idClient = dto.idClient();
 		Client client = clientRepository.findById(idClient)

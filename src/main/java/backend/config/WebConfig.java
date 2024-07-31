@@ -22,7 +22,7 @@ public class WebConfig {
 		corsConfiguration.setAllowedOrigins(all);//libera a rota
 		corsConfiguration.setAllowedHeaders(all);// libera todos os headers
 		corsConfiguration.setAllowedMethods(all);// permite todos os metodos http
-		corsConfiguration.setAllowCredentials(true); //para poder mandar credenciais pelo header
+		//corsConfiguration.setAllowCredentials(true); //para poder mandar credenciais pelo header
 		
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfiguration);
