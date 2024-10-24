@@ -51,9 +51,14 @@ public class ServiceProvidedController {
 		return serviceRepository.save(serviceProvided);	
 	}
 	
-	@GetMapping
+	/*@GetMapping
 	public List<ServiceProvided> serviceByMonth (@RequestParam(value = "month", required = false) Integer month){
 		return serviceRepository.findByMonth(month);
+	}*/
+	
+	@GetMapping
+	public List<ServiceProvided> serviceByNameandMonth (@RequestParam("clientId") Integer clientId, @RequestParam("mes") Integer mes){
+		return serviceRepository.findByNameMonth(clientId,mes);
 	}
 
 }

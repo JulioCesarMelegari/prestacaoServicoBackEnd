@@ -12,11 +12,8 @@ public interface ServiceProvidedRepository extends JpaRepository<ServiceProvided
 	
 	@Query(value= "select * from service_provided where month (sp.data_cadastro)=:month", nativeQuery = true)
 	List<ServiceProvided> findByMonth(@Param("month") Integer month);
-			
-		
-	@Query(value= "select c.name , sp.data_cadastro as service_provided from service_provided sp"
-			+ "inner join client c on c.id = sp.client_id"
-			+ "where upper(c.name) like upper(:name) and month(sp.data_cadastro) =:month", nativeQuery = true)
-	List<ServiceProvided> findByNameMonth(@Param("month") Integer month, @Param("name") String name);
+				
+	@Query(value= "SELECT sp.servico_descricao, sp.data_cadastro FROM service_provided sp WHERE MONTH(sp.data_cadastro) = :mes AND sp.cliente_id = :clientId", nativeQuery = true)
+	List<ServiceProvided> findByNameMonth(@Param("clientId") Integer clientId, @Param("mes") Integer mes);
 
 }
